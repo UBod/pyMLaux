@@ -87,7 +87,7 @@ def plot_history(history, measure='accuracy', figsize=(8, 6)):
         plt.legend(['train', 'validation'], loc='upper left')
         plt.show()
 
-def evaluate_classificaiton_result(y, pred, classes=None, no_classes=10):
+def evaluate_classification_result(y, pred, classes=None, no_classes=10):
     if classes is not None:
         no_classes = len(classes)
     else:
