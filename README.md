@@ -4,5 +4,5 @@ This package contains a few auxiliary functions that are hopefully useful in mac
 
 ### Contact
 
-Ulrich Bodenhofer, University of Applied Sciences Upper Austria\ 
+Ulrich Bodenhofer, University of Applied Sciences Upper Austria<br>
 [Homepage](https://pure.fh-ooe.at/en/persons/ulrich-bodenhofer) - [Private Homepage](http://ulrich.bodenhofer.com) - [LinkedIn](https://www.linkedin.com/in/ulrichbodenhofer/) - [Twitter](https://twitter.com/u_bode)
