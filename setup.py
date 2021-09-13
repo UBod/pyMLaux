@@ -15,5 +15,5 @@ setuptools.setup(
     license='MIT',
     packages=['pyMLaux'],
     install_requires=['numpy', 'pandas', 'sklearn', 'matplotlib', 'opencv-python', \
-                      'scipy', 'os', 'sys', 'struct', 'array'],
+                      'scipy', 'sys', 'struct', 'array'],
 )
