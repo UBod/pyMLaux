@@ -4,12 +4,11 @@ This package contains some auxiliary functions that are hopefully useful in mach
 
 ### Installation
 
-There are two easy ways of installing the package into your Python system.
-
-#### Method 1 (suggested on Google Colab):
+The easiest way of installing the package is via running the following command (if run from a notebook, prefix the command with an exclamation mark '!'):
 ``` bash
 pip install git+https://github.com/UBod/pyMLaux.git
 ```
+This is particularly recommended on Google Colaboratory. On your private Python system, you only need to run this command once (or whenever the package has been updated).
 
 
 ### Contact
