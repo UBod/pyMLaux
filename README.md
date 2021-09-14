@@ -8,7 +8,7 @@ The easiest way of installing the package is via running the following command (
 ``` bash
 pip install git+https://github.com/UBod/pyMLaux.git
 ```
-This is particularly recommended on Google Colaboratory. On your private Python system, you only need to run this command once (or whenever the package has been updated).
+On your private Python system, you only need to run this command once (or whenever the package has been updated).
 
 
 ### Contact
