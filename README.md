@@ -4,7 +4,7 @@ This package contains some auxiliary functions that are hopefully useful in mach
 
 ### Installation
 
-The easiest way of installing the package is via running the following command (if run from a notebook, prefix the command with an exclamation mark '!'):
+The easiest way of installing the package is via running the following command (if executed from inside a Jupyter or Colab notebook, prefix the command with an exclamation mark '!'):
 ``` bash
 pip install git+https://github.com/UBod/pyMLaux.git
 ```
