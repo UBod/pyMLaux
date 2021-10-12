@@ -7,6 +7,7 @@ import cv2
 
 from math import sqrt, ceil
 from scipy.stats import pearsonr
+from scipy.cluster.hierarchy import dendrogram
 
 import sys
 import os
@@ -139,8 +140,35 @@ def evaluate_regression_result(y, y_pred):
     cor = pearsonr(y, y_pred)
     print(f"Correlation coefficient (Pearson): {cor[0].round(2)} (p = {cor[1]})")
 
+    
+## auxiliary function for plotting agglomerative clustering results
+## source: https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html (+ modifications)
+def plot_dendrogram(model, figsize=(8, 6), title='Hierarchical Clustering', **kwargs):
+    # Create linkage matrix and then plot the dendrogram
+    # create the counts of samples under each node
+    counts = np.zeros(model.children_.shape[0])
+    n_samples = len(model.labels_)
+    for i, merge in enumerate(model.children_):
+        current_count = 0
+        for child_idx in merge:
+            if child_idx < n_samples:
+                current_count += 1  # leaf node
+            else:
+                current_count += counts[child_idx - n_samples]
+        counts[i] = current_count
 
-# source: http://abel.ee.ucla.edu/cvxopt/_downloads/mnist.py (+ modifications)
+    linkage_matrix = np.column_stack([model.children_, model.distances_,
+                                      counts]).astype(float)
+
+    # Plot the corresponding dendrogram
+    plt.figure(figsize=figsize)
+    plt.title(title)
+    dendrogram(linkage_matrix, **kwargs)
+    plt.xlabel("Number of samples in node (or index of sample if no parenthesis)")
+    plt.show()
+
+
+## source: http://abel.ee.ucla.edu/cvxopt/_downloads/mnist.py (+ modifications)
 def read_MNIST(dataset="train", path = "./"):
     if dataset is "train":
         fname_img = os.path.join(path, 'train-images-idx3-ubyte')
