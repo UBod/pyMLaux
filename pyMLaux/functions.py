@@ -5,7 +5,7 @@ from sklearn.metrics import confusion_matrix, mean_squared_error, mean_absolute_
 import matplotlib.pyplot as plt
 import cv2
 
-from math import sqrt, ceil
+from math import sqrt, ceil, log10, floor
 from scipy.stats import pearsonr
 from scipy.cluster.hierarchy import dendrogram
 
