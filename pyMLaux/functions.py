@@ -67,24 +67,44 @@ def show_img_data(x, no=30, layout=(5, 6), figsize=(10, 10), interpolation='bili
             fig.axes.get_yaxis().set_visible(False)
         plt.show()
         
-        
+## auxiliary function for creating meaningful tick positions for history plot
+def create_ticks(n, base=5):
+    steps = ceil(n / base)
+    magnitude = floor(log10(steps))
+    choices = np.array([1, 2, 5, 10])
+    step_c = choices * 10.**magnitude
+    dist = np.abs(step_c - steps)
+    sel = np.argmin(dist)
+    steps = step_c[sel]
+    ticks = np.arange(steps, n, steps, dtype='int')
+    if ticks[0] > 1:
+        ticks = np.concatenate(([1], ticks))
+    if ticks[-1] < n:
+        ticks = np.concatenate((ticks, [n]))
+    return(ticks)
+
 def plot_history(history, measure='accuracy', figsize=(8, 6)):
+    epochs = [int(i + 1) for i in history.epoch]
+    n = epochs[-1]
+    ticks = create_ticks(n)
     plt.figure(figsize=figsize)
-    plt.plot(history.history['loss'])
-    plt.plot(history.history['val_loss'])
+    plt.plot(epochs, history.history['loss'])
+    plt.plot(epochs, history.history['val_loss'])
     plt.title('Training history')
     plt.ylabel('loss')
     plt.xlabel('epoch')
+    plt.xticks(ticks)
     plt.legend(['train', 'validation'], loc='upper left')
     plt.show()
     if measure is not None and measure in history.history.keys() and \
         'val_' + measure in history.history.keys():
         plt.figure(figsize=figsize)
-        plt.plot(history.history[measure])
-        plt.plot(history.history['val_' + measure])
+        plt.plot(epochs, history.history[measure])
+        plt.plot(epochs, history.history['val_' + measure])
         plt.title('Training history')
         plt.ylabel(measure)
         plt.xlabel('epoch')
+        plt.xticks(ticks)
         plt.legend(['train', 'validation'], loc='upper left')
         plt.show()
 
