@@ -22,8 +22,12 @@ def predict_2d_for_plotting(x, y, func):
     Z = func(Xmat).reshape(x.size, y.size)
     return(X, Y, Z)
 
-def plot_2d_prediction(x, y, func, xval, yval, figsize=(8, 8), midval=0):
+def plot_2d_prediction(x, y, func, xval, yval, label=None, figsize=(8, 8), midval=0):
     X, Y, Z = predict_2d_for_plotting(xval, yval, func)
+
+    if label and len(label):
+        plt.title(label)
+
     plt.figure(figsize=figsize)
     plt.contourf(X, Y, Z, cmap='bwr', levels=[Z.min(), midval, Z.max()], alpha=0.2)
     plt.scatter(np.array(x)[:, 0], np.array(x)[:, 1], c=y, cmap='bwr')
