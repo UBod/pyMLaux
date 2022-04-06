@@ -25,7 +25,7 @@ def predict_2d_for_plotting(x, y, func):
 def plot_2d_prediction(x, y, func, xval, yval, label=None, figsize=(8, 8), midval=0):
     X, Y, Z = predict_2d_for_plotting(xval, yval, func)
 
-    if label:
+    if label and len(label):
         plt.title(label)
 
     plt.figure(figsize=figsize)
