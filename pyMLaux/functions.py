@@ -28,6 +28,11 @@ def plot_2d_prediction(x, y, func, xval, yval, label=None, figsize=(8, 8), midva
     plt.figure(figsize=figsize)
     if label and len(label):
         plt.title(label)
+    levels = [Z.min(), midval, Z.max()]
+    if levels[0] >= levels[1]:
+        levels[0] = levels[1] - 1
+    if levels[2] <= levels[1]:
+        levels[2] = levels[1] + 1
     plt.contourf(X, Y, Z, cmap='bwr', levels=[Z.min(), midval, Z.max()], alpha=0.2)
     plt.scatter(np.array(x)[:, 0], np.array(x)[:, 1], c=y, cmap='bwr')
     plt.show()
