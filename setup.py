@@ -14,5 +14,5 @@ setuptools.setup(
     url='https://github.com/UBod/pyMLaux',
     license='MIT',
     packages=['pyMLaux'],
-    install_requires=['numpy', 'pandas', 'sklearn', 'scipy', 'matplotlib', 'opencv-python'],
+    install_requires=['numpy', 'pandas', 'sklearn', 'scikit-learn', 'matplotlib', 'opencv-python'],
 )
