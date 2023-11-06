@@ -77,6 +77,8 @@ def show_img_data(x, no=30, layout=(5, 6), figsize=(10, 10), interpolation='bili
         
 ## auxiliary function for creating meaningful tick positions for history plot
 def create_ticks(n, base=5):
+    if n == 1:
+        return (np.arange(1, dtype='int') + 1)
     steps = ceil(n / base)
     magnitude = floor(log10(steps))
     choices = np.array([1, 2, 5, 10])
