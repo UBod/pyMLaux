@@ -98,8 +98,12 @@ def plot_history(history, measure='accuracy', figsize=(8, 6)):
     n = epochs[-1]
     ticks = create_ticks(n)
     plt.figure(figsize=figsize)
-    plt.plot(epochs, history.history['loss'])
-    plt.plot(epochs, history.history['val_loss'])
+    if n == 1:
+        plt.plot(epochs, history.history['loss'], 'o')
+        plt.plot(epochs, history.history['val_loss'], 'o')
+    else:
+        plt.plot(epochs, history.history['loss'])
+        plt.plot(epochs, history.history['val_loss'])
     plt.title('Training history')
     plt.ylabel('loss')
     plt.xlabel('epoch')
@@ -109,8 +113,12 @@ def plot_history(history, measure='accuracy', figsize=(8, 6)):
     if measure is not None and measure in history.history.keys() and \
         'val_' + measure in history.history.keys():
         plt.figure(figsize=figsize)
-        plt.plot(epochs, history.history[measure])
-        plt.plot(epochs, history.history['val_' + measure])
+        if n == 1:
+            plt.plot(epochs, history.history[measure], 'o')
+            plt.plot(epochs, history.history['val_' + measure], 'o')
+        else:
+            plt.plot(epochs, history.history[measure])
+            plt.plot(epochs, history.history['val_' + measure])
         plt.title('Training history')
         plt.ylabel(measure)
         plt.xlabel('epoch')
