@@ -14,4 +14,4 @@ On your private Python system, you only need to run this command once (or whenev
 ### Contact
 
 Ulrich Bodenhofer, University of Applied Sciences Upper Austria<br>
-[Homepage](https://pure.fh-ooe.at/en/persons/ulrich-bodenhofer) - [Private Homepage](http://ulrich.bodenhofer.com) - [LinkedIn](https://www.linkedin.com/in/ulrichbodenhofer/) - [Twitter](https://twitter.com/u_bode)
+[Homepage](https://pure.fh-ooe.at/en/persons/ulrich-bodenhofer) - [Private Homepage](http://ulrich.bodenhofer.com) - [LinkedIn](https://www.linkedin.com/in/ulrichbodenhofer/)
