@@ -126,23 +126,31 @@ def plot_history(history, measure='accuracy', figsize=(8, 6)):
         plt.legend(['train', 'validation'], loc='upper left')
         plt.show()
 
-def evaluate_classification_result(y, pred, classes=None, no_classes=10):
+def evaluate_classification_result(y, pred, classes=None, no_classes=2,
+                                   cutoff=0.5, hide_cm=False, return_cm=False):
     if classes is not None:
         no_classes = len(classes)
     else:
         classes = [str(i) for i in range(no_classes)]
 
     if len(pred.shape) == 2:
-        predC = np.argmax(pred, axis=1)
+        if pred.shape[1] == no_classes:
+            predC = np.argmax(pred, axis=1)
+        elif pred.shape[1] == 1 and no_classes == 2:
+            predC = (pred[:, [0]] >= cutoff)
+        else:
+            raise('pred has wrong format')
     elif len(pred.shape) == 1:
         predC = pred
     else:
         raise('pred has wrong format')
     cfTable = confusion_matrix(y, predC, labels=range(no_classes))
-    
-    print(cfTable)
 
-    print('\n')
+    if not hide_cm:
+        print('Confusion matrix (rows -> true, columns -> predicted):\n')
+        cfTable_pd = pd.DataFrame(cfTable, index=classes, columns=classes)
+        print(cfTable_pd)
+        print('\n')
     
     TPRs = pd.Series(0., index=range(no_classes))
     
@@ -165,8 +173,11 @@ def evaluate_classification_result(y, pred, classes=None, no_classes=10):
     print('\nOverall accuracy:  %7.3f%% (%d of %d)'%(np.sum(np.diagonal(cfTable)) * 100. / len(y),
           np.sum(np.diagonal(cfTable)), len(y)))
     print('Balanced accuracy: %7.3f%%'%(np.mean(TPRs) * 100.))
-        
-    return(cfTable)
+    
+    if return_cm:
+        return(cfTable)
+    else:
+        return
 
 ## auxiliary function for evaluating regression results
 def evaluate_regression_result(y, y_pred):
