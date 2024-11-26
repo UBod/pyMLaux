@@ -180,11 +180,11 @@ def evaluate_classification_result(y, pred, classes=None, no_classes=2,
         return
 
 ## auxiliary function for evaluating regression results
-def evaluate_regression_result(y, y_pred):
-    print(f"Mean squared error (MSE): {mean_squared_error(y, y_pred).round(2)}")
-    print(f"Root mean squared error (RMSE): {np.sqrt(mean_squared_error(y, y_pred)).round(2)}")
-    print(f"Mean absolute error (MAE): {mean_absolute_error(y, y_pred).round(2)}")
-    print(f"Coefficient of determination (R2): {r2_score(y, y_pred).round(2)}")
+def evaluate_regression_result(y, y_pred, digits=2):
+    print(f"Mean squared error (MSE): {round(mean_squared_error(y, y_pred), digits)}")
+    print(f"Root mean squared error (RMSE): {round(np.sqrt(mean_squared_error(y, y_pred)), digits)}")
+    print(f"Mean absolute error (MAE): {round(mean_absolute_error(y, y_pred), digits)}")
+    print(f"Coefficient of determination (R2): {round(r2_score(y, y_pred), digits)}")
 
     cor = pearsonr(y, y_pred)
     print(f"Correlation coefficient (Pearson): {cor[0].round(2)} (p = {cor[1]})")
