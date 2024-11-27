@@ -246,7 +246,7 @@ def create_data_from_testimage(file, thicken=0):
 
     # check for image format
     if img.shape[0] < img.shape[1]:
-        img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+        raise Exception('Image is not in upright format, please rotate image!')
 
     # resize image
     dim = (2000, round(img.shape[0] * (2000 / img.shape[1])))
