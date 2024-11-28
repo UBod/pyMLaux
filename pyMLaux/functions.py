@@ -139,11 +139,11 @@ def evaluate_classification_result(y, pred, classes=None, no_classes=2,
         elif pred.shape[1] == 1 and no_classes == 2:
             predC = (pred[:, [0]] >= cutoff)
         else:
-            raise('pred has wrong format')
+            raise ValueError('pred has wrong format')
     elif len(pred.shape) == 1:
         predC = pred
     else:
-        raise('pred has wrong format')
+        raise ValueError('pred has wrong format')
     cfTable = confusion_matrix(y, predC, labels=range(no_classes))
 
     if not hide_cm:
@@ -180,14 +180,44 @@ def evaluate_classification_result(y, pred, classes=None, no_classes=2,
         return
 
 ## auxiliary function for evaluating regression results
-def evaluate_regression_result(y, y_pred, digits=2):
-    print(f"Mean squared error (MSE): {round(mean_squared_error(y, y_pred), digits)}")
-    print(f"Root mean squared error (RMSE): {round(np.sqrt(mean_squared_error(y, y_pred)), digits)}")
-    print(f"Mean absolute error (MAE): {round(mean_absolute_error(y, y_pred), digits)}")
-    print(f"Coefficient of determination (R2): {round(r2_score(y, y_pred), digits)}")
+def evaluate_regression_result(y, y_pred, target_names=None):
+    if not isinstance(y, np.ndarray):
+        y = np.array(y)
+    if not isinstance(y_pred, np.ndarray):
+        y_pred = np.array(y_pred)
 
-    cor = pearsonr(y, y_pred)
-    print(f"Correlation coefficient (Pearson): {cor[0].round(2)} (p = {cor[1]})")
+    if len(y.shape) > 2 or len(y.shape) < 1:
+        raise ValueError('y has the wrong format')
+    if len(y_pred.shape) > 2 or len(y_pred.shape) < 1:
+        raise ValueError('y_pred has the wrong format')
+    if len(y.shape)  == 1:
+        n = y.shape[0]
+        y = y.reshape((n, 1))
+    if len(y_pred.shape)  == 1:
+        n = y_pred.shape[0]
+        y_pred = y_pred.reshape((n, 1))
+    if y.shape[0] != y_pred.shape[0]:
+        raise ValueError('y and y_pred have different numbers of samples')
+    if y.shape[1] != y_pred.shape[1]:
+        raise ValueError('y and y_pred have different numbers of features')
+
+    if target_names is None:
+        target_names = [str(i) for i in range(0, y.shape[1])]
+
+    if len(target_names) != y.shape[1]:
+        raise ValueError('length of target_names is not compatible with number of columns in y and y_pred')
+
+    for i, feat in enumerate(target_names):
+        print('Target feature %s:'%(feat))
+        print('    Mean squared error (MSE):          %7.3f'%(mean_squared_error(y[:, i], y_pred[:, i])))
+        print('    Root mean squared error (RMSE):    %7.3f'%(np.sqrt(mean_squared_error(y[:, i], y_pred[:, i]))))
+        print('    Mean absolute error (MAE):         %7.3f'%(mean_absolute_error(y[:, i], y_pred[:, i])))
+        print('    Coefficient of determination (R2): %7.3f'%(r2_score(y[:, i], y_pred[:, i])))
+
+        cor = pearsonr(y[:, i], y_pred[:, i])
+        print('    Correlation coefficient (Pearson): %7.3f (p = %.2e)'%(cor[0], cor[1]))
+        if i < len(target_names) - 1:
+            print('')
 
     
 ## auxiliary function for plotting agglomerative clustering results
@@ -241,12 +271,26 @@ def read_MNIST(dataset="train", path = "./"):
     lbl = np.array(lbl).astype('int32')
     return lbl, img
 
-def create_data_from_testimage(file, thicken=0):
+def create_data_from_testimage(file, thicken=0, rotate=0):
     img = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
+
+    if img is None:
+        raise ValueError('Could not read from', file)
+
+    if rotate == 0:
+        pass
+    elif rotate == 90:
+        img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+    elif rotate == 180:
+        img = cv2.rotate(img, cv2.ROTATE_180)
+    elif rotate == 270:
+        img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
+    else:
+        raise ValueError('Invalid rotation angle', rotate)
 
     # check for image format
     if img.shape[0] < img.shape[1]:
-        raise Exception('Image is not in upright format, please rotate image!')
+        raise ValueError('Image is not in upright format, please rotate image!')
 
     # resize image
     dim = (2000, round(img.shape[0] * (2000 / img.shape[1])))
