@@ -249,10 +249,10 @@ def plot_dendrogram(model, figsize=(8, 6), title='Hierarchical Clustering', **kw
 
 ## source: http://abel.ee.ucla.edu/cvxopt/_downloads/mnist.py (+ modifications)
 def read_MNIST(dataset="train", path = "./"):
-    if dataset is "train":
+    if dataset == "train":
         fname_img = os.path.join(path, 'train-images-idx3-ubyte')
         fname_lbl = os.path.join(path, 'train-labels-idx1-ubyte')
-    elif dataset is "test":
+    elif dataset == "test":
         fname_img = os.path.join(path, 't10k-images-idx3-ubyte')
         fname_lbl = os.path.join(path, 't10k-labels-idx1-ubyte')
     else:
