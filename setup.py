@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='pyMLaux',
-    version='0.0.11',
+    version='0.0.12',
     author='Ulrich Bodenhofer',
     author_email='ulrich@bodenhofer.com',
     description='Auxiliary functions for machine learning courses and projects',
@@ -16,3 +16,4 @@ setuptools.setup(
     packages=['pyMLaux'],
     install_requires=['numpy', 'pandas', 'scikit-learn', 'matplotlib', 'opencv-python'],
 )
+
